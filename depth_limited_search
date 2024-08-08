@@ -1,0 +1,55 @@
+from collections import defaultdict
+ans=0
+graph=defaultdict(list)
+def dls(s,v,vis,d,dl):
+    if d>dl:
+        return
+    vis.add(v)
+    print(v,end=" ")
+    if v==s:
+        global ans
+        ans=1
+    for i in graph[v]:
+        if i not in vis:
+            dls(s,i,vis,d+1,dl)
+def join(v1,v2):
+    graph[v1].append(v2)
+e=int(input("Enter the no of edges : "))
+for i in range(e):
+    v1=int(input("Vertex-1 : "))
+    v2=int(input("Vertex-2 : "))
+    join(v1,v2)
+s=int(input("Enter the serch element : "))
+depth_limit=int(input("Enter the limit : "))
+dls(s,1,set(),0,depth_limit)
+if ans==1:
+    print("Element found")
+else:
+    print("Not Found")
+
+OUTPUT : 
+
+Enter the no of edges : 9
+Vertex-1 : 1
+Vertex-2 : 2
+Vertex-1 : 1
+Vertex-2 : 9
+Vertex-1 : 1
+Vertex-2 : 10
+Vertex-1 : 2
+Vertex-2 : 3
+Vertex-1 : 2
+Vertex-2 : 4
+Vertex-1 : 4
+Vertex-2 : 5
+Vertex-1 : 4
+Vertex-2 : 6
+Vertex-1 : 4
+Vertex-2 : 7
+Vertex-1 : 5
+Vertex-2 : 8
+Enter the serch element : 3
+Enter the limit : 2
+1 2 3 4 9 10 
+Element found
+
