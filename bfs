@@ -1,0 +1,49 @@
+from queue import PriorityQueue;
+v=int(input("Enter the no of vertices : "))
+graph=[[]for i in range(v)]
+def bfs(s,d,n):
+    visited=[False]*n
+    p=PriorityQueue()
+    p.put((0,s))
+    visited[s]=True;
+    while p.empty()==False:
+        u=p.get()[1]
+        print(u,end=" ")
+        if(u==d):
+            break
+        for i,c in graph[u]:
+            if visited[i]==False:
+                visited[i]=True;
+                p.put((c,i))
+def join(v1,v2,c):
+    graph[v1].append((v2,c))
+    graph[v2].append((v1,c))
+e=int(input("Enter the no of edges : "))
+for i in range(e):
+    v1=int(input("Vertex-1 : "))
+    v2=int(input("Vertex-2 : "))
+    c=int(input("Cost : "))
+    join(v1,v2,c)
+s=int(input("Enter the source : "))
+d=int(input("Enter the destination : "))
+bfs(s,d,v)
+
+OUTPUT : 
+
+Enter the no of vertices : 5
+Enter the no of edges : 4
+Vertex-1 : 0
+Vertex-2 : 1
+Cost : 10
+Vertex-1 : 0
+Vertex-2 : 2
+Cost : 25
+Vertex-1 : 1
+Vertex-2 : 3
+Cost : 2
+Vertex-1 : 2
+Vertex-2 : 4
+Cost : 12
+Enter the source : 0
+Enter the destination : 3
+0 1 3 
