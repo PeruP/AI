@@ -1,0 +1,81 @@
+from collections import deque
+
+class Graph:
+    def __init__(self, adjacency_list):
+        self.adjacency_list = adjacency_list
+
+    def get_neighbors(self, v):
+        return self.adjacency_list.get(v, [])
+
+    def h(self, n):
+        H = {}
+        return H.get(n, 0)
+
+    def a_star_algorithm(self, start_node, stop_node, heuristic_values):
+        open_list = set([start_node])
+        closed_list = set([])
+        g = {start_node: 0}
+        parents = {start_node: start_node}
+
+        while open_list:
+            n = min(open_list, key=lambda x: g[x] + self.h(x), default=None)
+
+            if n is None:
+                print('Path does not exist!')
+                return None
+
+            if n == stop_node:
+                reconst_path = []
+                while parents[n] != n:
+                    reconst_path.append(n)
+                    n = parents[n]
+                reconst_path.append(start_node)
+                reconst_path.reverse()
+                print('Path found:', reconst_path)
+                return reconst_path
+
+            for m, weight in self.get_neighbors(n):
+                if m not in open_list and m not in closed_list:
+                    open_list.add(m)
+                    parents[m] = n
+                    g[m] = g[n] + weight
+                else:
+                    if g[m] > g[n] + weight:
+                        g[m] = g[n] + weight
+                        parents[m] = n
+                        if m in closed_list:
+                            closed_list.remove(m)
+                            open_list.add(m)
+
+            open_list.remove(n)
+            closed_list.add(n)
+
+        print('Path does not exist!')
+        return None
+
+# Take input dynamically
+adjacency_list = {}
+num_edges = int(input("Enter the number of edges: "))
+
+for _ in range(num_edges):
+    start, end, weight = input("Enter edge (start end weight): ").split()
+    weight = int(weight)
+   
+    if start not in adjacency_list:
+        adjacency_list[start] = []
+    adjacency_list[start].append((end, weight))
+
+graph = Graph(adjacency_list)
+
+# Take start and stop nodes dynamically
+start_node = input("Enter the start node: ")
+stop_node = input("Enter the stop node: ")
+
+# Take heuristic values dynamically
+heuristic_values = {}
+nodes = set(graph.adjacency_list.keys())
+for node in nodes:
+    heuristic = int(input(f"Enter heuristic value for node {node}: "))
+    heuristic_values[node] = heuristic
+
+graph.a_star_algorithm(start_node, stop_node, heuristic_values)

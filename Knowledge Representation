@@ -1,0 +1,17 @@
+likes(john, susie). /* John likes Susie */
+likes(X, susie). /* Everyone likes Susie */
+likes(john, Y). /* John likes everybody */
+likes(john, Y), likes(Y, john). /* John likes everybody and everybody likes John
+*/
+likes(john, susie); likes(john,mary). /* John likes Susie or John likes Mary */
+not(likes(john,pizza)). /* John does not like pizza */
+likes(john,susie) :- likes(john,mary)./* John likes Susie if John likes Mary.
+friends(X,Y) :- likes(X,Y),likes(Y,X). /* X and Y are friends if they like each other */
+hates(X,Y) :- not(likes(X,Y)). /* X hates Y if X does not like Y. */
+enemies(X,Y) :- not(likes(X,Y)),not(likes(Y,X)). /* X and Y are enemies if they
+don&#39;t like each other */
+
+OUTPUT:  
+likes(X,susie).   ----->    true
+likes(Who, Y).    ----->    john
+not(likes(Who,What)).    ----->    john,pizza

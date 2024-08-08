@@ -1,0 +1,30 @@
+from queue import PriorityQueue
+vertex=int(input("Enter the no of vertices: "))
+graph=[[] for i in range(vertex)]
+def best_first_search(source,destination,n):
+    visited=[False]*n
+    nasar=PriorityQueue()
+    nasar.put((0,source))
+    visited[source]=True
+    while nasar.empty()==False:
+        u=nasar.get()[1]
+        print(u,end=" ")
+        if u==destination:
+            break
+        for vertex,c in graph[u]:
+            if visited[vertex]==False:
+                    visited[vertex]=True
+                    nasar.put((c,vertex))
+    print()
+def joinlink(e1,e2,cost):
+    graph[e1].append((e2,cost))
+    graph[e2].append((e1,cost))
+link=int(input("Enter no of edges: "))
+for i in range(link):
+    e1=int(input("Enter the first node:"))
+    e2=int(input("Enter the second node:"))
+    cost=int(input("Enter the cost of edge:"))
+    joinlink(e1,e2,cost)
+source=int(input("Enter the source node:"))
+destination=int(input("Enter the destination node:"))
+best_first_search(source,destination,vertex)

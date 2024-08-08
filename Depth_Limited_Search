@@ -1,0 +1,33 @@
+from collections import defaultdict
+import sys
+class Graph:
+    def __init__(self):
+        self.graph=defaultdict(list)
+    def addEdge(self,u,v):
+        self.graph[u].append(v)
+    def addNode(self,search,v,visited,depth,depth_limit):
+        if depth>depth_limit:
+            return
+        visited.add(v)
+        print(v,end=' ')
+        if(v==search):
+            print("\n")
+            sys.exit("Element Found")
+        for neighbour in self.graph[v]:
+            if neighbour not in visited:
+                self.addNode(search,neighbour,visited,depth+1,depth_limit)
+    def DLS(self,search,v,depth_limit):
+        visited=set()
+        self.addNode(search,v,visited,0,depth_limit)
+g=Graph()
+ne=int(input("Enter the no of edges : "))
+while(ne>0):
+    a=int(input("Enter the vertex-1 : "))
+    b=int(input("Enter the vertex-2 : "))
+    g.addEdge(a,b)
+    ne-=1;
+search=int(input("Enter the element to search : "))
+depth_limit=int(input("Enter the limit : "))
+print("Traversal : ")
+g.DLS(search,1,depth_limit)
+print("\nElement not found in the given limit")

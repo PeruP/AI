@@ -1,0 +1,30 @@
+from collections import defaultdict;
+Graph=defaultdict(list)
+def addEdge(v1,v2):
+    Graph[v1].append(v2)
+def coloring(s,ans,colors,visited):
+    for i in Graph[s]:
+        for j in colors:
+            if i not in visited:
+                if j!=ans[s]:
+                    ans[i]=j
+                    visited.add(i)
+                    print(i,'->',j)
+                    coloring(i,ans,colors,visited)
+n=int(input("Enter the no.of vertices : "))
+e=int(input("Enter the no.of edges : "))
+for i in range(e):
+    v1,v2=input("Enter the vertex-1 and vertex-2 of the edge : ").split()
+    addEdge(v1,v2)
+s=input("Enter the source vertex : ")
+ans={}
+print("Enter ",n," colors : ")
+colors=[]
+for i in range(n):
+    co=input()
+    colors.append(co)
+ans[s]=colors[0]
+print(s,'->',ans[s])
+visited=set()
+visited.add(s)
+coloring(s,ans,colors,visited)
