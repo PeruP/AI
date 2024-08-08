@@ -1,0 +1,51 @@
+from collections import defaultdict;
+family=defaultdict(list)
+dead=set()
+def birth(parent,child):
+    family[parent].append(child)
+def death(name):
+    dead.add(name)
+def inheritance(head):
+    ans=[]
+    dfs(ans,head)
+    return ans
+def dfs(ans,head):
+    if(head not in dead):
+        ans.append(head)
+    for i in family[head]:
+        dfs(ans,i)
+n=int(input("Enter the no.of relations : "))
+he=input("Enter the head : ")
+while(n>0):
+    print("Enter the parent and child : ")
+    p,c=input().split()
+    birth(p,c)
+    n=n-1
+print(inheritance(he))
+d=int(input("No of people dead : "))
+while(d>0):
+    dd=input("Name of the dead person : ")
+    death(dd)
+    print(inheritance(he))
+    d=d-1
+
+OUTPUT : 
+Enter the no.of relations : 5
+Enter the head : a
+Enter the parent and child :
+a b
+Enter the parent and child :
+a c
+Enter the parent and child :
+b d
+Enter the parent and child :
+c e
+Enter the parent and child :
+d f
+['a', 'b', 'd', 'f', 'c', 'e']
+No of people dead : 2
+Name of the dead person : a
+['b', 'd', 'f', 'c', 'e']
+Name of the dead person : f
+['b', 'd', 'c', 'e']
+
